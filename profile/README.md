@@ -48,8 +48,8 @@ $ ./and
 ### Eklentiler
 
 ## İşlevsel
-*[foruma-konu-açma](https://github.com/AND-community/forum-tema)* - Foruma konu açmak için gerekli.
-*[Özel-chat](https://github.com/AND-community/demo-repository)* - Özel chat için gerekli.
+* [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
+* [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
 
 ---
 ## Temel Özellikler
