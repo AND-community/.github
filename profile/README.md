@@ -45,12 +45,6 @@ $ ./and
 
 ---
 
-### Eklentiler
-
-## İşlevsel
-* [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
-* [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
-
 ---
 ## Temel Özellikler
 
@@ -65,6 +59,12 @@ $ ./and
 | **Eklenti Sistemi** | XenForo tarzı: statik `plugin.json` manifest, aç/kapat, HTTP IPC API. |
 
 ---
+
+### Eklentiler
+
+## İşlevsel
+* [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
+* [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
 
 ## Mimari
 
