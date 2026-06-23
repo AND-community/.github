@@ -11,7 +11,7 @@
 
 **Anonim · Merkezi Olmayan · Sansürsüz**
 
-*BIP-39 kimlik · libp2p ağ · terminal-native · XenForo tarzı eklenti sistemi*
+*BIP-39 kimlik · libp2p ağ · terminal-native*
 
 ---
 
