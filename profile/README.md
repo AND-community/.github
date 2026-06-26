@@ -60,12 +60,6 @@ $ ./and
 
 ---
 
-### Eklentiler
-
-## İşlevsel
-* [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
-* [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
-
 ## Mimari
 
 ```
@@ -175,6 +169,12 @@ POST /send-dm           → {"peer_id","message"}
 GET  /data-dir          → AND_DATA_DIR yolu
 GET  /category          → AND_CATEGORY (gizli eklenti olarak açıldıysa)
 ```
+
+### Eklentiler
+
+## İşlevsel
+* [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
+* [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
 
 ### Kendi Eklentinizi Yazın
 
