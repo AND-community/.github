@@ -127,7 +127,6 @@ go build -o and-plugin-ozel-chat ./Eklentiler/ozel_chat
 
 ## Eklenti Sistemi
 
-AND'ın eklenti sistemi [XenForo add-on mimarisi](https://xenforo.com/docs/dev/add-ons/) ilham alınarak tasarlanmıştır.
 
 ### plugin.json — Statik Manifest
 
