@@ -174,6 +174,10 @@ GET  /category          → AND_CATEGORY (gizli eklenti olarak açıldıysa)
 ## İşlevsel
 * [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
 * [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
+* [DeltaX](https://github.com/AND-community/DeltaX) - Toplu proje geliştirmek için gerekli.
+
+## İşlevsel
+* [Pembis](https://github.com/AND-community/Pembis) - Pembe tema.
 
 ### Kendi Eklentinizi Yazın
 
