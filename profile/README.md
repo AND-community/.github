@@ -9,7 +9,7 @@
 ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝
 ```
 
-**Anonim · Merkezi Olmayan · Sansürsüz**
+**Anonim · Merkezi Olmayan · Yarı Sansürsüz**
 
 *BIP-39 kimlik · libp2p ağ · terminal-native*
 
