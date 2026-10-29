@@ -9,288 +9,181 @@
 ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝
 ```
 
-**Anonim · Merkezi Olmayan · Yarı Sansürsüz**
+**Pseudonymous · Decentralized · Lightly moderated**
 
-*BIP-39 kimlik · libp2p ağ · terminal-native*
+*Ed25519 identity · libp2p network · terminal-native*
+
+**English** · [Türkçe](https://github.com/AND-community/.github/blob/main/profile/README.tr.md)
 
 ---
 
-![Go](https://img.shields.io/badge/Go-1.22%2B-00ADD8?style=flat-square&logo=go&logoColor=white)
-![libp2p](https://img.shields.io/badge/libp2p-0.34-7B2FBE?style=flat-square)
+![Go](https://img.shields.io/badge/Go-1.26.4%2B-00ADD8?style=flat-square&logo=go&logoColor=white)
+![libp2p](https://img.shields.io/badge/network-libp2p-7B2FBE?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-555555?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-22863a?style=flat-square)
-![Status](https://img.shields.io/badge/durum-aktif%20geliştirme-orange?style=flat-square)
+![License](https://img.shields.io/badge/license-AGPL--3.0-22863a?style=flat-square)
+![Status](https://img.shields.io/badge/status-active%20development-orange?style=flat-square)
 
 </div>
 
 ---
 
-## AND Nedir?
+## What is AND?
 
-AND, **sunucu olmadan** çalışan bir P2P terminal forum platformudur.  
-Hesap oluşturmak yok. Kayıt yok. Merkezi bir altyapı yok.
+AND is a peer-to-peer forum community that runs in the terminal **without any server**.  
+No accounts. No sign-up. No central infrastructure.
 
-Tek ihtiyacınız olan: terminal, `and` binary'si ve 12 kelimelik BIP-39 mnemonik.
+All you need is a terminal, the `and` binary and a password. On the first start AND creates your
+identity — an Ed25519 key pair — and shows it once as a 32-character **recovery code**. That code is
+your identity: with it you can restore your identity on another computer or if you forget your
+password; without it there is no way back.
 
-```
-$ ./and
-
-  BIP-39 mnemonik (12 kelime):
-  ▸ _
-
-  →  12 kelimeyi gir ya da yenisini üret [n]
-```
-
-İlk girişte rastgele bir kimlik üretilir. Bu 12 kelime = sizin kimliğiniz. Kaybederseniz geri yolu yok.
+Every node is both a client and a server. Topics, replies and chat messages are signed and spread
+over libp2p GossipSub; each node keeps its own copy in a local SQLite database. The interface is
+available in six languages: Turkish, English, German, Spanish, French and Russian.
 
 ---
 
----
-## Temel Özellikler
+## Key features
 
-| Özellik | Açıklama |
+| Feature | Description |
 |---|---|
-| **Sıfır Sunucu** | libp2p DHT + mDNS ile tam P2P keşif. Herhangi bir merkezî altyapıya bağımlılık yok. |
-| **BIP-39 Kimlik** | 12 kelimelik mnemonik → Ed25519 anahtar çifti. Kimlik cüzdanda, sunucuda değil. |
-| **GossipSub Forum** | Konular imzalanmış mesaj olarak yayınlanır; her düğüm lokal SQLite'a kopyalar. |
-| **Moderasyon** | Kurucu Ed25519 imzası ile moderatör sertifikası yayınlar. Onaylar da imzalı. |
-| **Özel Mesaj** | libp2p stream üzerinden uçtan uca şifreli DM. |
-| **Otomatik Güncelleme** | GitHub Releases'tan imzalı binary çeker, yerinde günceller. |
-| **Eklenti Sistemi** | XenForo tarzı: statik `plugin.json` manifest, aç/kapat, HTTP IPC API. |
+| **No servers** | Peer discovery through the libp2p DHT and mDNS; no central infrastructure to rely on |
+| **Key-based identity** | 128-bit entropy (equivalent to a 12-word BIP-39 mnemonic) → Ed25519 key pair, stored encrypted with your password on your own device |
+| **Signed forum** | Topics in 34 categories, published as signed GossipSub messages; every node verifies and stores them. Topics delete themselves after 5 days |
+| **Public chat** | A signed P2P chat channel with rate limits and history sync |
+| **Private messages and files** | Direct libp2p streams between the two peers; resumable file transfer that the recipient has to approve |
+| **Personal sites** | Every user can publish a small multi-page site, signed and synced like the forum |
+| **Moderation** | The founder issues signed moderator certificates; bans (1 hour to permanent), early topic deletion and an audit history |
+| **Plugins** | Standalone binaries that talk to AND over a local HTTP API, each with its own key and the permissions the user approved |
+| **Automatic updates** | From GitHub Releases, applied only if the checksum file carries the project's Ed25519 signature |
 
 ---
 
-## Mimari
+## Repositories
 
-```
-┌─────────────────────────────────────────────────────┐
-│                      and binary                     │
-│                                                     │
-│   ┌──────────┐   ┌──────────┐   ┌───────────────┐   │
-│   │  crypto  │   │ network  │   │     forum     │   │
-│   │ BIP-39   │   │ libp2p   │   │  SQLite store │   │
-│   │ Ed25519  │   │ DHT/mDNS │   │  GossipSub    │   │
-│   └──────────┘   └──────────┘   └───────────────┘   │
-│                                                     │
-│   ┌──────────┐   ┌──────────┐   ┌───────────────┐   │
-│   │  dmmgr   │   │  modera- │   │   pluginapi   │   │
-│   │  DM IPC  │   │  tion    │   │  HTTP server  │   │
-│   └──────────┘   └──────────┘   └───────────────┘   │
-│                                                     │
-│   ┌─────────────────────────────────────────────┐   │
-│   │                   tui                       │   │
-│   │     Bubbletea · lipgloss · bubbles          │   │
-│   └─────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────┘
-           │ AND_API_ADDR    │ tea.ExecProcess
-           ▼                 ▼
-    ┌─────────────┐   ┌─────────────┐
-    │  and-plugin │   │  and-plugin │
-    │   -admin    │   │  -moderator │  ... diğer eklentiler
-    └─────────────┘   └─────────────┘
-```
-
-AND, eklentileri **ayrı process** olarak çalıştırır.  
-Terminal kontrolü `tea.ExecProcess` ile devredilir; güvenli bir HTTP IPC kanalı üzerinden AND API'sine erişilir.
+| Repository | What it is |
+|---|---|
+| [**AND**](https://github.com/AND-community/AND) | The application itself, plus the Admin Panel, Özel Chat (private chat), Site and Example plugins and the VS Code extension (`and-vscode`) |
+| [**konu_ac**](https://github.com/AND-community/konu_ac) | The new-topic plugin — needed to create forum topics |
+| [**DeltaX**](https://github.com/AND-community/DeltaX) | Private groups with their own version control system, synced end-to-end encrypted between the members |
+| [**Pembis**](https://github.com/AND-community/Pembis) | A theme plugin that paints AND pink |
+| [**and-arama-motoru**](https://github.com/AND-community/and-arama-motoru) | The AND Search Engine: an independent, read-only peer that indexes the network's content and searches it from the terminal |
+| [ozel_chat](https://github.com/AND-community/ozel_chat) | *Archived.* Özel Chat now lives in the AND repository (`Eklentiler/ozel_chat`) |
 
 ---
 
-## Kurulum
+## Getting started
 
-### Hazır Binary (Önerilen)
-
-GitHub Releases sayfasından işletim sisteminize uygun paketi indirin:
-
-```
-and-linux-amd64.tar.gz      → Linux x86-64
-and-darwin-arm64.tar.gz     → macOS Apple Silicon
-and-darwin-amd64.tar.gz     → macOS Intel
-and-windows-amd64.zip       → Windows
-```
-
-Arşivi açın; `and` (veya `and.exe`) binary'sini PATH'inizdeki bir dizine kopyalayın.  
-Eklentiler (`and-plugin-*.exe`) binary'nin yanında olmalıdır.
-
-### Kaynaktan Derleme
+Building from source needs Go 1.26.4 or later (older Go versions from 1.21 on download the right
+toolchain by themselves):
 
 ```bash
-git clone https://github.com/lucian95511/and
-cd and
+git clone https://github.com/AND-community/AND.git
+cd AND
 go build -o and ./cmd/and
-go build -o and-plugin-admin    ./Eklentiler/admin
-go build -o and-plugin-moderator ./Eklentiler/moderator
-go build -o and-plugin-konu-ac  ./Eklentiler/konu_ac
-go build -o and-plugin-ozel-chat ./Eklentiler/ozel_chat
+
+# Plugins are built into their own folders next to their plugin.json
+go build -o Eklentiler/ozel_chat/and-plugin-ozel_chat ./Eklentiler/ozel_chat
+
+# Konu Aç (needed to create topics) lives in its own repository
+git clone https://github.com/AND-community/konu_ac.git Eklentiler/konu_ac
+go build -o Eklentiler/konu_ac/and-plugin-konu_ac ./Eklentiler/konu_ac
+
+./and
 ```
+
+On Windows add `.exe` to the binary names. The full instructions — all plugins, ldflags, the
+founder key — are in the [AND README](https://github.com/AND-community/AND#installation).
 
 ---
 
-## Eklenti Sistemi
+## Plugin system
 
-
-### plugin.json — Statik Manifest
-
-Her eklenti, binary'nin yanında bir `plugin.json` sidecar dosyası taşır.  
-AND bu dosyayı okur; binary'yi çalıştırmadan menü bilgisini alır.
+AND plugins are separate programs. AND finds each one in `Eklentiler/<name>/` next to its own binary:
+a `plugin.json` manifest plus an `and-plugin-<name>` binary. When you open a plugin, AND asks once
+for the permissions it declares, then starts it in the same terminal and passes it the address of a
+local HTTP API and a key of its own. When the plugin exits, AND takes the terminal back.
 
 ```json
 {
-  "name":        "ornek",
-  "label":       "Örnek Eklenti",
+  "name":        "example",
+  "label":       "Example Plugin",
   "version":     "1.0.0",
-  "description": "Kısa açıklama",
-  "author":      "Yazar Adı",
-  "requires":    []
+  "description": "Short description",
+  "author":      "Your name",
+  "permissions": ["dm"]
 }
 ```
 
-`"label": ""` → eklenti AND menüsünde görünmez (gizli / dahili eklenti).
-
-### Aç / Kapat
-
-AND TUI'inde Space tuşuyla her eklenti ayrıca açılıp kapatılabilir.  
-Durum `AND_DATA_DIR/plugins_state.json` dosyasına kaydedilir.
-
-### API Uç Noktaları
-
-AND başlatıldığında rastgele bir `localhost` portunda HTTP API sunar.  
-Adres `AND_API_ADDR` ortam değişkeniyle eklentiye iletilir.
-
-```
-GET  /identity          → kullanıcı adı, public key, peer ID
-GET  /role              → IsFounder, IsModerator
-GET  /pending           → onay bekleyen konular (mod/kurucu)
-POST /approve           → {"post_id": "…"}
-POST /reject            → {"post_id": "…"}
-POST /approve-author    → {"author_key": "…"}
-POST /create-post       → {"category","title","body","permanent_req"}
-POST /send-dm           → {"peer_id","message"}
-GET  /data-dir          → AND_DATA_DIR yolu
-GET  /category          → AND_CATEGORY (gizli eklenti olarak açıldıysa)
-```
-
-### Eklentiler
-
-## İşlevsel
-* [foruma-konu-açma](https://github.com/AND-community/konu_ac) - Foruma konu açmak için gerekli.
-* [Özel-chat](https://github.com/AND-community/ozel_chat) - Özel chat için gerekli.
-* [DeltaX](https://github.com/AND-community/DeltaX) - Toplu proje geliştirmek için gerekli.
-
-## İşlevsel
-* [Pembis](https://github.com/AND-community/Pembis) - Pembe tema.
-
-### Kendi Eklentinizi Yazın
-
-```
-Eklentiler/ornek/
-├── main.go        ← tüm API özelliklerini gösteren referans implementasyon
-└── plugin.json    ← statik manifest
-```
-
-`Eklentiler/ornek/main.go` dosyası şunları gösterir:
-
-- `--manifest` bayrağı ile sidecar fallback
-- `pluginapi.NewClientFromEnv()` ile API bağlantısı
-- 7 ekranlı Bubbletea TUI (kimlik, bekleyen konular, konu oluşturma, DM, ayarlar)
-- `textarea` + `textinput` + `viewport` kullanımı
-- `safe()` ile ANSI injection koruması
-- `pending` bayrağıyla çift-eylem engeli
-- `AND_DATA_DIR` ile kalıcı ayar dosyası
-
-<details>
-<summary>Minimal eklenti şablonu (tıklayın)</summary>
-
-```go
-package main
-
-import (
-    "encoding/json"
-    "fmt"
-    "os"
-    "github.com/lucian95511/and/internal/pluginapi"
-)
-
-var manifest = pluginapi.Manifest{
-    Name:    "benim-eklentim",
-    Label:   "Benim Eklentim",
-    Version: "0.1.0",
-    Author:  "Sen",
-}
-
-func main() {
-    if len(os.Args) > 1 && os.Args[1] == "--manifest" {
-        data, _ := json.Marshal(manifest)
-        fmt.Println(string(data))
-        return
-    }
-
-    client, err := pluginapi.NewClientFromEnv()
-    if err != nil {
-        fmt.Fprintln(os.Stderr, err)
-        os.Exit(1)
-    }
-
-    id, _ := client.Identity()
-    fmt.Println("Merhaba,", id.Name)
-}
-```
-
-</details>
+A plugin with `"label": ""` doesn't appear in the menu (konu_ac is opened from the forum with `n`).
+Plugins open in AND's interface language. A full template and the API reference are in
+[Eklentiler/ornek](https://github.com/AND-community/AND/tree/main/Eklentiler/ornek) (in Turkish).
 
 ---
 
-## Güvenlik Modeli
+## Security model
 
 ```
-Kimlik Katmanı
-  BIP-39 mnemonik → Ed25519 özel anahtar (yerel, şifreli)
-  İmzasız mesaj ağda reddedilir.
+Identity
+  128-bit entropy → Ed25519 private key, kept on your device,
+  encrypted with your password (Argon2id + AES-256-GCM).
+  Unsigned messages are rejected by the network.
 
-Moderasyon Katmanı
-  Kurucu, moderatör sertifikasını Ed25519 ile imzalar.
-  Onay mesajları da imzalıdır; her düğüm bağımsız doğrular.
-  Sunucu taraflı rol doğrulama — AND_API_ADDR bilen process
-  bile rol olmadan /approve çağıramaz.
+Moderation
+  The founder signs moderator certificates with Ed25519.
+  Bans and deletions are signed too; every node verifies them on its own.
+  A revoked certificate stops working immediately.
 
-Terminal Güvenliği
-  Ağdan gelen tüm string'ler ANSI escape kodu temizleme
-  (safe()) filtresinden geçer. Injection mümkün değil.
+Messages
+  Private messages travel over a direct, encrypted libp2p stream between
+  the two peers; the local history is encrypted with a key derived from
+  your identity.
 
-Hassas Dosyalar (asla commit etme)
-  identity.dat   — şifrelenmiş Ed25519 özel anahtar
-  founder.key    — kurucu anahtar
-  bans/          — moderasyon kayıtları
+Terminal safety
+  Text from the network is cleaned of escape sequences and control
+  characters before it is drawn, so it can't take over your terminal.
+
+Plugins
+  Each plugin gets its own API key and only the permissions you approved.
+
+Never share
+  identity.dat   — your encrypted private key
+  founder.key    — the founder key
+  bans/          — moderation records
 ```
+
+To report a vulnerability, follow [SECURITY.md](https://github.com/AND-community/AND/blob/main/SECURITY.md)
+— please don't open a public issue.
 
 ---
 
-## Teknoloji Yığını
+## Tech stack
 
-| Katman | Kütüphane |
+| Layer | Library |
 |---|---|
-| P2P Ağ | `go-libp2p` — DHT, mDNS, GossipSub, stream |
+| P2P network | `go-libp2p` — DHT (`go-libp2p-kad-dht`), mDNS, GossipSub (`go-libp2p-pubsub`), streams |
 | TUI | `bubbletea` + `lipgloss` + `bubbles` |
-| Kalıcı Depo | `mattn/go-sqlite3` |
-| Kimlik | `tyler-smith/go-bip39` + `btcsuite/btcd/btcutil/hdkeychain` |
-| Güncelleme | GitHub Releases API + `minio/selfupdate` |
-| Test | `stretchr/testify` |
+| Local store | `modernc.org/sqlite` (pure Go, no CGO) |
+| Identity | Ed25519 (Go standard library) + `tyler-smith/go-bip39` |
+| Updates | GitHub Releases API + SHA-256 checksums signed with Ed25519 |
+| Tests | Go's `testing` package, fuzz tests, end-to-end tests with two nodes |
 
 ---
 
-## Katkı
+## Contributing
 
-1. Repoyu fork edin
-2. Feature branch oluşturun: `git checkout -b feat/özellik-adı`
-3. Değişikliklerinizi commit edin
-4. Pull request açın
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feat/feature-name`
+3. Commit your changes
+4. Open a pull request
 
-Güvenlik açığı bildirmek için doğrudan iletişime geçin — issue açmayın.
+The contribution guide is in [CONTRIBUTING.md](https://github.com/AND-community/AND/blob/main/CONTRIBUTING.md) (in Turkish).
 
 ---
 
 <div align="center">
 
-*AND tamamen Go ile yazılmıştır.*  
-*Bir sunucuya güvenmek zorunda değilsiniz.*
+*AND is written entirely in Go and licensed under the AGPL-3.0.*  
+*You don't have to trust a server.*
 
 </div>
