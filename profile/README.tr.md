@@ -13,6 +13,8 @@
 
 *Ed25519 kimlik · libp2p ağ · terminal-native*
 
+[**and-community.github.io**](https://and-community.github.io/tr/)
+
 [English](https://github.com/AND-community/.github/blob/main/profile/README.md) · **Türkçe**
 
 ---
@@ -68,6 +70,7 @@ altı dildedir: Türkçe, English, Deutsch, Español, Français, Русский.
 | [**DeltaX**](https://github.com/AND-community/DeltaX) | Kendi sürüm kontrol sistemiyle özel gruplar; üyeler arasında uçtan uca şifreli senkron |
 | [**Pembis**](https://github.com/AND-community/Pembis) | AND'ı pembeye boyayan tema eklentisi |
 | [**and-arama-motoru**](https://github.com/AND-community/and-arama-motoru) | AND Arama Motoru: ağdaki içeriği indeksleyip terminalden aratan, bağımsız ve salt-okunur bir eş |
+| [**and-community.github.io**](https://github.com/AND-community/and-community.github.io) | [and-community.github.io](https://and-community.github.io/tr/) adresindeki İngilizce ve Türkçe web sitesi |
 | [ozel_chat](https://github.com/AND-community/ozel_chat) | *Arşivlendi.* Özel Chat artık AND deposunun içinde (`Eklentiler/ozel_chat`) |
 
 ---

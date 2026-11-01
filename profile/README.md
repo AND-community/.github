@@ -13,6 +13,8 @@
 
 *Ed25519 identity · libp2p network · terminal-native*
 
+[**and-community.github.io**](https://and-community.github.io/)
+
 **English** · [Türkçe](https://github.com/AND-community/.github/blob/main/profile/README.tr.md)
 
 ---
@@ -68,6 +70,7 @@ available in six languages: Turkish, English, German, Spanish, French and Russia
 | [**DeltaX**](https://github.com/AND-community/DeltaX) | Private groups with their own version control system, synced end-to-end encrypted between the members |
 | [**Pembis**](https://github.com/AND-community/Pembis) | A theme plugin that paints AND pink |
 | [**and-arama-motoru**](https://github.com/AND-community/and-arama-motoru) | The AND Search Engine: an independent, read-only peer that indexes the network's content and searches it from the terminal |
+| [**and-community.github.io**](https://github.com/AND-community/and-community.github.io) | The website at [and-community.github.io](https://and-community.github.io/), in English and Turkish |
 | [ozel_chat](https://github.com/AND-community/ozel_chat) | *Archived.* Özel Chat now lives in the AND repository (`Eklentiler/ozel_chat`) |
 
 ---
