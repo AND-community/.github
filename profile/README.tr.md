@@ -11,7 +11,7 @@
 
 **Takma Adlı · Merkezi Olmayan · Yarı Sansürsüz**
 
-*Ed25519 kimlik · libp2p ağ · terminal-native*
+*Ed25519 kimlik · libp2p ağ · masaüstü uygulaması ve terminal*
 
 [**and-community.github.io**](https://and-community.github.io/tr/)
 
@@ -31,10 +31,10 @@
 
 ## AND Nedir?
 
-AND, **sunucu olmadan** çalışan, terminalde açılan eşten eşe (P2P) bir forum topluluğudur.  
+AND, **sunucu olmadan** çalışan, kendi masaüstü penceresinde ya da terminalde açılan eşten eşe (P2P) bir forum topluluğudur.  
 Hesap oluşturmak yok. Kayıt yok. Merkezi bir altyapı yok.
 
-Tek ihtiyacın: terminal, `and` binary'si ve bir parola. İlk açılışta AND kimliğini — bir Ed25519
+Tek ihtiyacın: `and` programı ve bir parola. İlk açılışta AND kimliğini — bir Ed25519
 anahtar çifti — üretir ve sana bir kez 32 karakterlik bir **kurtarma kodu** olarak gösterir. Bu kod
 senin kimliğindir: onunla kimliğini başka bir bilgisayarda ya da parolanı unuttuğunda geri
 getirirsin; kaybedersen geri yolu yok.
@@ -50,13 +50,14 @@ altı dildedir: Türkçe, English, Deutsch, Español, Français, Русский.
 | Özellik | Açıklama |
 |---|---|
 | **Sıfır sunucu** | libp2p DHT + mDNS ile eş keşfi; herhangi bir merkezi altyapıya bağımlılık yok |
+| **Masaüstü uygulaması** | Varsayılan arayüz: AND'ın kendi penceresi (Windows'ta WebView2, Linux ve macOS'ta varsayılan tarayıcı); kenar çubuğu, Ctrl+K hızlı erişim ve eklentiler içinde. `and --terminal` tam ekran terminal arayüzünü açar |
 | **Anahtar tabanlı kimlik** | 128 bit entropi (12 kelimelik BIP-39 anımsatıcısına eşdeğer) → Ed25519 anahtar çifti; kendi cihazında parolanla şifreli saklanır |
 | **İmzalı forum** | 34 kategoride konular, imzalı GossipSub mesajı olarak yayınlanır; her düğüm doğrulayıp saklar. Konular 5 gün sonra kendiliğinden silinir |
 | **Genel sohbet** | Hız sınırlı, geçmişi senkronlanan, imzalı bir P2P sohbet kanalı |
 | **Özel mesaj ve dosya** | İki eş arasında doğrudan libp2p akışı; alıcının onayıyla, kaldığı yerden devam edebilen dosya aktarımı |
 | **Kişisel site** | Her kullanıcı küçük, çok sayfalı bir site yayınlayabilir; forum gibi imzalı ve senkronlanır |
 | **Moderasyon** | Kurucu imzalı moderatör sertifikaları yayınlar; banlar (1 saatten kalıcıya), konuları erken silme ve denetim geçmişi |
-| **Eklentiler** | AND'la yerel bir HTTP API üzerinden konuşan bağımsız binary'ler; her birinin kendi anahtarı ve kullanıcının onayladığı izinleri vardır |
+| **Eklentiler** | AND'la yerel bir HTTP API üzerinden konuşan bağımsız programlar; her birinin kendi anahtarı ve kullanıcının onayladığı izinleri vardır. Masaüstü uygulamasında AND'ın penceresinin içinde, kategorilere ayrılmış olarak çalışırlar; AND'la gelenler ekranlarını AND'ın kendi bileşenleriyle çizer. `and eklenti kur` ile kurulur, `and eklenti yeni` ile kendininkine başlarsın |
 | **Otomatik güncelleme** | GitHub Releases'tan; yalnızca özet dosyası projenin Ed25519 imzasını taşıyorsa uygulanır |
 
 ---
@@ -65,13 +66,13 @@ altı dildedir: Türkçe, English, Deutsch, Español, Français, Русский.
 
 | Depo | Ne |
 |---|---|
-| [**AND**](https://github.com/AND-community/AND) | Uygulamanın kendisi; ayrıca Yönetici Paneli, Özel Chat, Site ve Örnek eklentileri ile VS Code uzantısı (`and-vscode`) |
-| [**konu_ac**](https://github.com/AND-community/konu_ac) | Konu açma eklentisi — forumda konu açmak için gerekli |
+| [**AND**](https://github.com/AND-community/AND) | Uygulamanın kendisi; ayrıca Forum, Yönetici Paneli, Özel Chat, Site ve Örnek eklentileri ile VS Code uzantısı (`and-vscode`) |
 | [**DeltaX**](https://github.com/AND-community/DeltaX) | Kendi sürüm kontrol sistemiyle özel gruplar; üyeler arasında uçtan uca şifreli senkron |
 | [**Pembis**](https://github.com/AND-community/Pembis) | AND'ı pembeye boyayan tema eklentisi |
 | [**and-arama-motoru**](https://github.com/AND-community/and-arama-motoru) | AND Arama Motoru: ağdaki içeriği indeksleyip terminalden aratan, bağımsız ve salt-okunur bir eş |
 | [**and-community.github.io**](https://github.com/AND-community/and-community.github.io) | [and-community.github.io](https://and-community.github.io/tr/) adresindeki İngilizce ve Türkçe web sitesi |
 | [ozel_chat](https://github.com/AND-community/ozel_chat) | *Arşivlendi.* Özel Chat artık AND deposunun içinde (`Eklentiler/ozel_chat`) |
+| [konu_ac](https://github.com/AND-community/konu_ac) | *Arşivlendi.* Konu açma formu artık AND'ın Forum eklentisinin parçası (`Eklentiler/forum`) |
 
 ---
 
@@ -85,12 +86,10 @@ git clone https://github.com/AND-community/AND.git
 cd AND
 go build -o and ./cmd/and
 
-# Eklentiler kendi klasörlerine, plugin.json'ın yanına derlenir
+# Eklentiler kendi klasörlerine, plugin.json'ın yanına derlenir;
+# forumu Forum eklentisi çizer
+go build -o Eklentiler/forum/and-plugin-forum ./Eklentiler/forum
 go build -o Eklentiler/ozel_chat/and-plugin-ozel_chat ./Eklentiler/ozel_chat
-
-# Konu Aç (konu açmak için gerekli) ayrı bir depodadır
-git clone https://github.com/AND-community/konu_ac.git Eklentiler/konu_ac
-go build -o Eklentiler/konu_ac/and-plugin-konu_ac ./Eklentiler/konu_ac
 
 ./and
 ```
@@ -103,10 +102,16 @@ anlatım [AND README'sinde](https://github.com/AND-community/AND/blob/main/READM
 ## Eklenti Sistemi
 
 AND eklentileri ayrı programlardır. AND her birini kendi binary'sinin yanındaki
-`Eklentiler/<isim>/` klasöründe bulur: bir `plugin.json` manifesti ve bir `and-plugin-<isim>`
-binary'si. Bir eklentiyi açtığında AND, eklentinin bildirdiği izinleri bir kez sorar; sonra onu aynı
-terminalde başlatır ve yerel bir HTTP API'nin adresiyle eklentiye özel bir anahtar verir. Eklenti
-kapanınca AND terminali geri alır.
+`Eklentiler/<isim>/` klasöründe bulur (`and eklenti kur` ile kurulanlar veri dizinine gider): bir
+`plugin.json` manifesti ve bir `and-plugin-<isim>` binary'si. Bir eklentiyi açtığında AND,
+eklentinin bildirdiği izinleri bir kez sorar; sonra onu yerel bir HTTP API'nin adresiyle ve
+eklentiye özel bir anahtarla başlatır.
+
+Masaüstü uygulamasında eklentiler AND'ın penceresinin içinde, kenar çubuğunda `category`'lerine
+göre gruplanmış olarak çalışır. `"ui"` bildiren bir eklenti ekranlarını AND'a veri olarak gönderir;
+AND onları denetleyip kendi bileşenleriyle çizer, böylece uygulamanın geri kalanı gibi görünürler.
+Öteki eklentiler terminal programlarıdır; Windows'ta pencerenin içindeki bir terminalde çalışırlar.
+Terminal arayüzünde bir eklenti, kapanana kadar terminali devralır.
 
 ```json
 {
@@ -115,13 +120,15 @@ kapanınca AND terminali geri alır.
   "version":     "1.0.0",
   "description": "Kısa açıklama",
   "author":      "Yazar Adı",
-  "permissions": ["dm"]
+  "category":    "tools",
+  "permissions": ["dm"],
+  "ui":          1
 }
 ```
 
-`"label": ""` olan bir eklenti menüde görünmez (konu_ac forumdan `n` ile açılır). Eklentiler AND'ın
-arayüz dilinde açılır. Tam şablon ve API başvurusu
-[Eklentiler/ornek](https://github.com/AND-community/AND/tree/main/Eklentiler/ornek)'te.
+`"label": ""` olan bir eklenti menüde görünmez. Eklentiler AND'ın arayüz dilinde açılır.
+`and eklenti yeni <isim>` testleri ve çevirileriyle çalışan bir eklenti projesi yazar; tam rehber
+[EKLENTILER.md](https://github.com/AND-community/AND/blob/main/EKLENTILER.md)'de.
 
 ---
 
@@ -142,13 +149,17 @@ Mesajlar
   Özel mesajlar iki eş arasında doğrudan, şifreli bir libp2p akışıyla
   gider; yerel geçmiş kimlikten türetilen bir anahtarla şifrelenir.
 
-Terminal güvenliği
-  Ağdan gelen metin ekrana basılmadan önce kaçış dizilerinden ve kontrol
-  karakterlerinden temizlenir; terminalini ele geçiremez.
+Arayüz
+  Masaüstü arayüzü yalnızca 127.0.0.1'de, tek kullanımlık bir kodla
+  açılan pencereye ve sıkı bir içerik güvenliği politikasıyla sunulur;
+  ağdan gelen içerik hiçbir zaman HTML sayılmaz. Terminalde, ağdan gelen
+  metin kaçış dizilerinden ve kontrol karakterlerinden temizlenir;
+  terminalini ele geçiremez.
 
 Eklentiler
   Her eklentinin kendi API anahtarı ve yalnızca senin onayladığın
-  izinleri vardır.
+  izinleri vardır. AND, bir eklentinin gönderdiği ekranları çizmeden
+  önce denetler.
 
 Asla paylaşma
   identity.dat   — şifrelenmiş özel anahtarın
@@ -166,6 +177,7 @@ izle — lütfen herkese açık issue açma.
 | Katman | Kütüphane |
 |---|---|
 | P2P ağ | `go-libp2p` — DHT (`go-libp2p-kad-dht`), mDNS, GossipSub (`go-libp2p-pubsub`), akışlar |
+| Masaüstü | Windows'ta `wailsapp/go-webview2` ile WebView2 penceresi (öteki sistemlerde varsayılan tarayıcı), yerel bir Go HTTP sunucusu; terminal eklentileri için `xterm.js` |
 | TUI | `bubbletea` + `lipgloss` + `bubbles` |
 | Yerel depo | `modernc.org/sqlite` (saf Go, CGO gerekmez) |
 | Kimlik | Ed25519 (Go standart kütüphanesi) + `tyler-smith/go-bip39` |
