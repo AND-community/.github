@@ -57,7 +57,7 @@ altı dildedir: Türkçe, English, Deutsch, Español, Français, Русский.
 | **Özel mesaj ve dosya** | İki eş arasında doğrudan libp2p akışı; alıcının onayıyla, kaldığı yerden devam edebilen dosya aktarımı |
 | **Kişisel site** | Her kullanıcı küçük, çok sayfalı bir site yayınlayabilir; forum gibi imzalı ve senkronlanır |
 | **Moderasyon** | Kurucu imzalı moderatör sertifikaları yayınlar; banlar (1 saatten kalıcıya), konuları erken silme ve denetim geçmişi |
-| **Eklentiler** | AND'la yerel bir HTTP API üzerinden konuşan bağımsız programlar; her birinin kendi anahtarı ve kullanıcının onayladığı izinleri vardır. Masaüstü uygulamasında AND'ın penceresinin içinde, kategorilere ayrılmış olarak çalışırlar; AND'la gelenler ekranlarını AND'ın kendi bileşenleriyle çizer. `and eklenti kur` ile kurulur, `and eklenti yeni` ile kendininkine başlarsın |
+| **Eklentiler** | AND'la yerel bir HTTP API üzerinden konuşan bağımsız programlar; her birinin kendi anahtarı ve kullanıcının onayladığı izinleri vardır. Masaüstü uygulamasında kategorilere ayrılırlar; AND'la gelenler AND'ın penceresinin içinde çalışıp ekranlarını AND'ın kendi bileşenleriyle çizer, Windows'ta terminal eklentileri de pencerenin içinde çalışır. `and eklenti kur` ile kurulur, `and eklenti yeni` ile kendininkine başlarsın |
 | **Otomatik güncelleme** | GitHub Releases'tan; yalnızca özet dosyası projenin Ed25519 imzasını taşıyorsa uygulanır |
 
 ---

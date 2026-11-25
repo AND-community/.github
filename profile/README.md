@@ -57,7 +57,7 @@ available in six languages: Turkish, English, German, Spanish, French and Russia
 | **Private messages and files** | Direct libp2p streams between the two peers; resumable file transfer that the recipient has to approve |
 | **Personal sites** | Every user can publish a small multi-page site, signed and synced like the forum |
 | **Moderation** | The founder issues signed moderator certificates; bans (1 hour to permanent), early topic deletion and an audit history |
-| **Plugins** | Standalone programs that talk to AND over a local HTTP API, each with its own key and the permissions the user approved. In the desktop app they run inside AND's window, grouped by category; the bundled ones draw their screens with AND's own components. Install with `and plugin install`, start your own with `and plugin new` |
+| **Plugins** | Standalone programs that talk to AND over a local HTTP API, each with its own key and the permissions the user approved. In the desktop app they are grouped by category; the bundled ones run inside AND's window and draw their screens with AND's own components, and on Windows terminal plugins run inside the window too. Install with `and plugin install`, start your own with `and plugin new` |
 | **Automatic updates** | From GitHub Releases, applied only if the checksum file carries the project's Ed25519 signature |
 
 ---
